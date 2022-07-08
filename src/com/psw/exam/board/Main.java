@@ -1,5 +1,6 @@
 package com.psw.exam.board;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 // TODO 예시
@@ -14,12 +15,32 @@ public class Main {
     int articleLastId = 0;
     Article lastArticle = null;
 
+    ArrayList<Article> articles = new ArrayList<Article>();
+
+    // 테스트 데이터 3개 등록 시작
+    articles.add(new Article(1, "제목1", "내용1"));
+    articles.add(new Article(2, "제목2", "내용2"));
+    articles.add(new Article(3, "제목3", "내용3"));
+    // 테스트 데이터 3개 등록 끝
+
     while (true) {
       System.out.printf("명령) ");
       String cmd = sc.nextLine();
 
       if ( cmd.equals("exit")) {
         break;
+      }
+      else if (cmd.equals("/usr/article/list")) {
+        System.out.println("- 게시물 리스트 -");
+        System.out.printf("------------------\n");
+        System.out.printf("번호 / 제목\n");
+
+        for ( Article article : articles ) {
+          System.out.printf("%d / %s\n", article.id, article.title);
+        }
+
+        System.out.printf("------------------\n");
+
       }
       else if ( cmd.equals("/usr/article/detail")) {
 
