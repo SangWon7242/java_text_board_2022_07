@@ -4,9 +4,10 @@ import java.util.*;
 
 public class Main {
   static void makeTestData(List<Article> articles) {
-    articles.add(new Article(1, "제목1", "내용1"));
-    articles.add(new Article(2, "제목2", "내용2"));
-    articles.add(new Article(3, "제목3", "내용3"));
+    for ( int i = 0; i < 100; i++ ) {
+      int id = i + 1;
+      articles.add(new Article(id, "제목" + id, "내용" + id));
+    }
   }
 
   public static void main(String[] args) {
@@ -43,11 +44,11 @@ public class Main {
         List<Article> sortedArticles = articles;
 
         boolean orderByIdDesc = true;
+
         if ( params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
           orderByIdDesc = false;
         }
 
-        // 리스트 출력시 정순, 역순 순회
         if (orderByIdDesc) {
           sortedArticles = Util.reverseList(sortedArticles);
         }
@@ -69,7 +70,6 @@ public class Main {
 
         try {
           id = Integer.parseInt(params.get("id"));
-          System.out.println(id);
         }
         catch (NumberFormatException e) {
           System.out.println("id를 정수 형태로 입력해주세요.");
