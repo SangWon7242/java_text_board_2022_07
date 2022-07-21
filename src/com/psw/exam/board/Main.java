@@ -24,7 +24,6 @@ public class Main {
       articleLastId = articles.get(articles.size() - 1).id;
     }
 
-
     while (true) {
       System.out.printf("명령) ");
       String cmd = sc.nextLine();
@@ -41,22 +40,22 @@ public class Main {
         System.out.printf("번호 / 제목\n");
         System.out.printf("------------------\n");
 
+        List<Article> sortedArticles = articles;
+
         boolean orderByIdDesc = true;
         if ( params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
           orderByIdDesc = false;
         }
 
+        // 리스트 출력시 정순, 역순 순회
         if (orderByIdDesc) {
-          for ( int i = articles.size() - 1; i >= 0; i--) {
-            Article article = articles.get(i);
-            System.out.printf("%d / %s\n", article.id, article.title);
-          }
+          sortedArticles = Util.reverseList(sortedArticles);
         }
-        else {
-          for ( Article article : articles ) {
-            System.out.printf("%d / %s\n", article.id, article.title);
-          }
+
+        for ( Article article : sortedArticles ) {
+          System.out.printf("%d / %s\n", article.id, article.title);
         }
+
 
       }
       else if ( rq.getUrlPath().equals("/usr/article/detail")) {
@@ -70,6 +69,7 @@ public class Main {
 
         try {
           id = Integer.parseInt(params.get("id"));
+          System.out.println(id);
         }
         catch (NumberFormatException e) {
           System.out.println("id를 정수 형태로 입력해주세요.");
@@ -185,5 +185,15 @@ class Util {
 
   static String getUrlPathFromUrl(String url) {
     return url.split("\\?", 2)[0];
+  }
+
+  // 이 함수는 원본리스트를 훼손하지 않고, 새 리스트를 만듭니다. 즉 정렬이 반대인 복사본리스트를 만들어서 반환합니다.
+  public static<T> List<T> reverseList(List<T> list) {
+    List<T> reverse = new ArrayList<>(list.size());
+
+    for ( int i = list.size() - 1; i >= 0; i-- ) {
+      reverse.add(list.get(i));
+    }
+    return reverse;
   }
 }
