@@ -44,19 +44,17 @@ public class Main {
         // 검색 시작
         List<Article> filteredArticles = articles;
 
-        String searchKeyword = params.get("searchKeyword");
-
         if ( params.containsKey("searchKeyword") ) {
-          searchKeyword = params.get("searchKeyword");
-        }
+          String searchKeyword = params.get("searchKeyword");
 
-        filteredArticles = new ArrayList<>();
+          filteredArticles = new ArrayList<>();
 
-        for ( Article article : articles ) {
-          boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
+          for ( Article article : articles ) {
+            boolean matched = article.title.contains(searchKeyword) || article.body.contains(searchKeyword);
 
-          if ( matched ) {
-            filteredArticles.add(article);
+            if ( matched ) {
+              filteredArticles.add(article);
+            }
           }
         }
 
