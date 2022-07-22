@@ -42,6 +42,8 @@ public class Main {
         actionUsrArticleWrite(rq, sc, articles, articleLastId);
       } else if (rq.getUrlPath().equals("/usr/article/modify")) {
         actionUsrArticleModify(rq, sc, articles);
+      } else if (rq.getUrlPath().equals("/usr/article/delete")) {
+        actionUsrArticleDelete(rq, sc, articles);
       } else {
         System.out.printf("입력 된 명령어 : %s\n", cmd);
       }
@@ -50,6 +52,40 @@ public class Main {
     System.out.println("== 프로그램 끝 ==");
 
     sc.close();
+  }
+
+  private static void actionUsrArticleDelete(Rq rq, Scanner sc, List<Article> articles) {
+    Map<String, String> params = rq.getParams();
+
+    if (params.containsKey("id") == false) {
+      System.out.println("id를 입력해주세요.");
+      return;
+    }
+
+    int id = 0;
+
+    try {
+      id = Integer.parseInt(params.get("id"));
+    } catch (NumberFormatException e) {
+      System.out.println("id를 정수 형태로 입력해주세요.");
+      return;
+    }
+
+    if (articles.isEmpty()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    Article article = articles.get(id - 1);
+
+    if (id > articles.size()) {
+      System.out.println("게시물이 존재하지 않습니다.");
+      return;
+    }
+
+    articles.remove(article);
+
+    System.out.printf("%d번 게시물이 삭제되었습니다.\n", article.id);
   }
 
   private static void actionUsrArticleModify(Rq rq, Scanner sc, List<Article> articles) {
