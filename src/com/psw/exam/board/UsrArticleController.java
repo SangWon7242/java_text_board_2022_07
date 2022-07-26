@@ -2,7 +2,6 @@ package com.psw.exam.board;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class UsrArticleController {
   int articleLastId;
@@ -28,19 +27,10 @@ public class UsrArticleController {
   }
 
   public void actionDelete(Rq rq) {
-    Map<String, String> params = rq.getParams();
+    int id = rq.getIntParam("id", 0);
 
-    if (params.containsKey("id") == false) {
-      System.out.println("id를 입력해주세요.");
-      return;
-    }
-
-    int id = 0;
-
-    try {
-      id = Integer.parseInt(params.get("id"));
-    } catch (NumberFormatException e) {
-      System.out.println("id를 정수 형태로 입력해주세요.");
+    if (id == 0) {
+      System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
 
@@ -62,19 +52,10 @@ public class UsrArticleController {
   }
 
   public void actionModify(Rq rq) {
-    Map<String, String> params = rq.getParams();
+    int id = rq.getIntParam("id", 0);
 
-    if (params.containsKey("id") == false) {
-      System.out.println("id를 입력해주세요.");
-      return;
-    }
-
-    int id = 0;
-
-    try {
-      id = Integer.parseInt(params.get("id"));
-    } catch (NumberFormatException e) {
-      System.out.println("id를 정수 형태로 입력해주세요.");
+    if (id == 0) {
+      System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
 
@@ -99,19 +80,15 @@ public class UsrArticleController {
   }
 
   public void actionDetail(Rq rq) {
-    Map<String, String> params = rq.getParams();
+    int id = rq.getIntParam("id", 0);
 
-    if (params.containsKey("id") == false) {
-      System.out.println("id를 입력해주세요.");
+    if (id == 0) {
+      System.out.println("id를 올바르게 입력해주세요.");
       return;
     }
 
-    int id = 0;
-
-    try {
-      id = Integer.parseInt(params.get("id"));
-    } catch (NumberFormatException e) {
-      System.out.println("id를 정수 형태로 입력해주세요.");
+    if (articles.isEmpty()) {
+      System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
 
@@ -139,14 +116,13 @@ public class UsrArticleController {
     System.out.printf("번호 / 제목\n");
     System.out.printf("------------------\n");
 
-    Map<String, String> params = rq.getParams();
+
+    String searchKeyword = rq.getParam("searchKeyword", "");
 
     // 검색 시작
     List<Article> filteredArticles = articles;
 
-    if (params.containsKey("searchKeyword")) {
-      String searchKeyword = params.get("searchKeyword");
-
+    if (searchKeyword.length() > 0 ) {
       filteredArticles = new ArrayList<>();
 
       for (Article article : articles) {
@@ -160,11 +136,9 @@ public class UsrArticleController {
 
     List<Article> sortedArticles = filteredArticles;
 
-    boolean orderByIdDesc = true;
+    String orderBy = rq.getParam("orderBy", "idDesc");
 
-    if (params.containsKey("orderBy") && params.get("orderBy").equals("idAsc")) {
-      orderByIdDesc = false;
-    }
+    boolean orderByIdDesc = orderBy.equals("idDesc");
 
     if (orderByIdDesc) {
       sortedArticles = Util.reverseList(sortedArticles);

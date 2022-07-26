@@ -17,6 +17,30 @@ public class Rq {
     return params;
   }
 
+  public int getIntParam(String paramsName, int defaultValue) {
+
+    if ( params.containsKey(paramsName) == false ) {
+      return defaultValue;
+    }
+
+    try {
+      return Integer.parseInt(params.get(paramsName));
+    }
+    catch ( NumberFormatException e) {
+      return defaultValue;
+    }
+
+  }
+
+  public String getParam(String paramsName, String defaultValue) {
+
+    if ( params.containsKey(paramsName) == false ) {
+      return defaultValue;
+    }
+
+    return params.get(paramsName);
+  }
+
   public String getUrlPath() {
     return urlPath;
   }

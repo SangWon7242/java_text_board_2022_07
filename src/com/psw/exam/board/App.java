@@ -3,7 +3,6 @@ package com.psw.exam.board;
 import java.util.Scanner;
 
 public class App {
-
   void main() {
 
     Scanner sc = Container.sc;
