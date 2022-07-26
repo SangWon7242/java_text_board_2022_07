@@ -5,8 +5,6 @@ public class Member {
   String loginId;
   String loginPw;
 
-  String 테스트;
-
   Member(int id, String loginId, String loginPw) {
     this.id = id;
     this.loginId = loginId;
