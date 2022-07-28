@@ -8,7 +8,6 @@ public class App {
     Scanner sc = Container.sc;
     Session session = Container.getSession();
 
-
     System.out.println("== 게시판 v 0.1 ==");
     System.out.println("== 프로그램 시작 ==");
 
