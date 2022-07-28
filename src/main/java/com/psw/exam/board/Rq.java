@@ -1,6 +1,7 @@
 package com.psw.exam.board;
 
 import com.psw.exam.board.container.Container;
+import com.psw.exam.board.dto.Member;
 import com.psw.exam.board.util.Util;
 
 import java.util.Map;
@@ -10,10 +11,13 @@ public class Rq {
   private Map<String, String> params;
   private String urlPath;
 
-  public Rq(String url) {
-    this.url = url;
-    params = Util.getParamsFromUrl(this.url);
-    urlPath = Util.getUrlPathFromUrl(this.url);
+  Rq() {
+
+  }
+
+  public void setCommand(String url) {
+    urlPath = Util.getUrlPathFromUrl(url);
+    params = Util.getParamsFromUrl(url);
   }
 
   public Map<String, String> getParams() {
@@ -58,5 +62,33 @@ public class Rq {
     Session session = Container.getSession();
 
     session.removeAttribute(key);
+  }
+
+  public boolean isLogined() {
+    return hasSessionAttr("loginedMember");
+  }
+
+  private boolean hasSessionAttr(String key) {
+    Session session = Container.getSession();
+
+    return session.hasAttribute(key);
+  }
+
+  public Member getLoginedMember() {
+    return (Member) getSessionAttr("loginedMember");
+  }
+
+  private Object getSessionAttr(String key) {
+    Session session = Container.getSession();
+
+    return session.getAttribute(key);
+  }
+
+  public void logout() {
+    removeSessionAttr("loginedMember");
+  }
+
+  public void login(Member member) {
+    setSessionAttr("loginedMember", member);
   }
 }
