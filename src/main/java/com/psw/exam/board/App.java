@@ -1,11 +1,14 @@
 package com.psw.exam.board;
 
+import com.psw.exam.board.container.Container;
+import com.psw.exam.board.dto.Member;
+
 import java.util.Scanner;
 
 public class App {
   void run() {
 
-    Scanner sc = Container.sc;
+    Scanner sc = Container.getSc();
     Session session = Container.getSession();
 
     System.out.println("== 게시판 v 0.1 ==");
@@ -17,7 +20,7 @@ public class App {
       String promptName = "명령";
 
       if ( loginedMember != null ) {
-        promptName = loginedMember.loginId;
+        promptName = loginedMember.getLoginId();
       }
 
 
@@ -29,21 +32,21 @@ public class App {
       if (rq.getUrlPath().equals("exit")) {
         break;
       } else if (rq.getUrlPath().equals("/usr/article/list")) {
-        Container.usrArticleController.actionList(rq);
+        Container.getUsrArticleController().actionList(rq);
       } else if (rq.getUrlPath().equals("/usr/article/detail")) {
-        Container.usrArticleController.actionDetail(rq);
+        Container.getUsrArticleController().actionDetail(rq);
       } else if (rq.getUrlPath().equals("/usr/article/write")) {
-        Container.usrArticleController.actionWrite(rq);
+        Container.getUsrArticleController().actionWrite(rq);
       } else if (rq.getUrlPath().equals("/usr/article/modify")) {
-        Container.usrArticleController.actionModify(rq);
+        Container.getUsrArticleController().actionModify(rq);
       } else if (rq.getUrlPath().equals("/usr/article/delete")) {
-        Container.usrArticleController.actionDelete(rq);
+        Container.getUsrArticleController().actionDelete(rq);
       } else if (rq.getUrlPath().equals("/usr/member/join")) {
-        Container.usrMemberController.actionJoin(rq);
+        Container.getUsrMemberController().actionJoin(rq);
       } else if (rq.getUrlPath().equals("/usr/member/login")) {
-        Container.usrMemberController.actionLogin(rq);
+        Container.getUsrMemberController().actionLogin(rq);
       } else if (rq.getUrlPath().equals("/usr/member/logout")) {
-        Container.usrMemberController.actionLogout(rq);
+        Container.getUsrMemberController().actionLogout(rq);
       } else {
         System.out.printf("입력 된 명령어 : %s\n", cmd);
       }
