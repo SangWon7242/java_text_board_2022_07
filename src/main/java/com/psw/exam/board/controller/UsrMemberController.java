@@ -9,11 +9,10 @@ public class UsrMemberController {
 
   private MemberService memberService;
   public UsrMemberController() {
-
     memberService = Container.getMemberService();
     memberService.makeTestData();
-
   }
+
   public void actionJoin(Rq rq) {
     System.out.println("- 회원 가입 -");
     System.out.printf("로그인 아이디 : ");

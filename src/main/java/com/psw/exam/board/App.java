@@ -2,7 +2,10 @@ package com.psw.exam.board;
 
 import com.psw.exam.board.container.Container;
 import com.psw.exam.board.dto.Member;
+import com.psw.exam.board.interceptor.Interceptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -28,6 +31,10 @@ public class App {
       String cmd = sc.nextLine();
 
       rq.setCommand(cmd);
+
+      if (runInterceptors(rq) == false) {
+        continue;
+      }
 
       if (rq.getUrlPath().equals("exit")) {
         break;
@@ -55,6 +62,20 @@ public class App {
     System.out.println("== 프로그램 끝 ==");
 
     sc.close();
+  }
+
+  private boolean runInterceptors(Rq rq) {
+    List<Interceptor> interceptors = new ArrayList<>();
+
+    interceptors.add(Container.getNeedLoginInterceptor());
+    interceptors.add(Container.getNeedLogoutInterceptor());
+
+    for( Interceptor interceptor : interceptors) {
+      if( interceptor.run(rq) == false) {
+        return false;
+      }
+    }
+    return true;
   }
 
 
