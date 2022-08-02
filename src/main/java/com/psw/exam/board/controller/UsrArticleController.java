@@ -10,15 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsrArticleController {
-
-
   private ArticleService articleService;
-  private List<Article> articles;
 
   public UsrArticleController() {
     articleService = Container.getArticleService();
-    articles = articleService.getArticles();
-
     makeTestData();
   }
 
@@ -34,14 +29,9 @@ public class UsrArticleController {
       return;
     }
 
-    if (articles.isEmpty()) {
-      System.out.println("게시물이 존재하지 않습니다.");
-      return;
-    }
+    Article article = articleService.getArticleById(id);
 
-    Article article = articles.get(id - 1);
-
-    if (id > articles.size()) {
+    if (article == null) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
@@ -60,14 +50,9 @@ public class UsrArticleController {
       return;
     }
 
-    if (articles.isEmpty()) {
-      System.out.println("게시물이 존재하지 않습니다.");
-      return;
-    }
+    Article article = articleService.getArticleById(id);
 
-    Article article = articles.get(id - 1);
-
-    if (id > articles.size()) {
+    if (article == null) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
@@ -88,19 +73,9 @@ public class UsrArticleController {
       return;
     }
 
-    if (articles.isEmpty()) {
-      System.out.println("게시물이 존재하지 않습니다.");
-      return;
-    }
+    Article article = articleService.getArticleById(id);
 
-    if (articles.isEmpty()) {
-      System.out.println("게시물이 존재하지 않습니다.");
-      return;
-    }
-
-    Article article = articles.get(id - 1);
-
-    if (id > articles.size()) {
+    if (article == null) {
       System.out.println("게시물이 존재하지 않습니다.");
       return;
     }
@@ -119,6 +94,8 @@ public class UsrArticleController {
 
 
     String searchKeyword = rq.getParam("searchKeyword", "");
+
+    List<Article> articles = articleService.getArticles();
 
     // 검색 시작
     List<Article> filteredArticles = articles;
