@@ -135,7 +135,9 @@ public class UsrArticleController {
     System.out.printf("내용 : ");
     String body = Container.getSc().nextLine();
 
-    int id = articleService.write(1, title, body);
+    int loginedMemberId = rq.getLoginedMemberId();
+
+    int id = articleService.write(1, loginedMemberId, title, body);
 
     System.out.printf("%d번 게시물이 입력되었습니다.\n", id);
   }

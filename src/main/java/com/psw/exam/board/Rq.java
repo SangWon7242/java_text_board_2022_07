@@ -91,4 +91,8 @@ public class Rq {
   public void login(Member member) {
     setSessionAttr("loginedMember", member);
   }
+
+  public int getLoginedMemberId() {
+    return getLoginedMember().getId();
+  }
 }
