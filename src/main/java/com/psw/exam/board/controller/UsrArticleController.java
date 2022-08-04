@@ -62,9 +62,12 @@ public class UsrArticleController {
     }
 
     System.out.printf("새 제목 : ");
-    article.setTitle(Container.getSc().nextLine());
+    String title = Container.getSc().nextLine().trim();
     System.out.printf("새 내용 : ");
-    article.setBody(Container.getSc().nextLine());
+    String body = Container.getSc().nextLine().trim();
+    article.setUpdateDate(Util.getNowDateStr());
+
+    articleService.modify(article.getId(), title, body);
 
     System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
   }
@@ -93,7 +96,7 @@ public class UsrArticleController {
   public void actionList(Rq rq) {
     System.out.println("- 게시물 리스트 -");
     System.out.printf("------------------\n");
-    System.out.printf("번호 / 제목\n");
+    System.out.printf("번호 / 제목 / 현재날짜\n");
     System.out.printf("------------------\n");
 
 
@@ -127,7 +130,7 @@ public class UsrArticleController {
     }
 
     for (Article article : sortedArticles) {
-      System.out.printf("%d / %s\n", article.getId(), article.getTitle());
+      System.out.printf("%d / %s / %s\n", article.getId(), article.getTitle(), article.getRegDate());
     }
 
   }

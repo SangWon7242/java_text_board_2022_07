@@ -36,4 +36,8 @@ public class ArticleService {
   public Article getArticleById(int id) {
     return articleRepository.getArticleById(id);
   }
+
+  public void modify(int id, String title, String body) {
+    articleRepository.modify(id, title, body);
+  }
 }

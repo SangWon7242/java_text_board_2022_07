@@ -1,6 +1,7 @@
 package com.psw.exam.board.repository;
 
 import com.psw.exam.board.dto.Member;
+import com.psw.exam.board.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,9 @@ public class MemberRepository {
 
   public int join(String loginId, String loginPw) {
     int id = lastId + 1;
-    Member member = new Member(id, loginId, loginPw);
+    String regDate = Util.getNowDateStr();
+    String updateDate = regDate;
+    Member member = new Member(id, regDate, updateDate, loginId, loginPw);
     members.add(member);
     lastId = id;
 
