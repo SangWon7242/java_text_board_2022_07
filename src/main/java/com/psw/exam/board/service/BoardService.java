@@ -14,12 +14,12 @@ public class BoardService {
     return boardRepository.getBoardById(id);
   }
 
-  public void makeTestDate() {
+  public void makeTestData() {
     make("notice", "공지사항");
     make("free", "자유");
   }
 
-  public int make(String code, String name) {
+  private int make(String code, String name) {
     return boardRepository.make(code, name);
   }
 }

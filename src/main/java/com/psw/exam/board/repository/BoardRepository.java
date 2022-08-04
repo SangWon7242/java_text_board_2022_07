@@ -32,6 +32,7 @@ public class BoardRepository {
 
     Board board = new Board(id, regDate, updateDate, code, name);
     boards.add(board);
+
     lastId = id;
 
     return id;
