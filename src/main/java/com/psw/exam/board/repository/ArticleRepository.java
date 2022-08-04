@@ -26,7 +26,19 @@ public class ArticleRepository {
     return id;
   }
 
-  public List<Article> getArticles() {
+  public List<Article> getArticles(int boardId) {
+    if ( boardId == 0 ) {
+      return articles;
+    }
+
+    List<Article> filteredArticles  = new ArrayList<>();
+
+    for(Article article : articles) {
+      if (article.getBoardId() == boardId){
+        filteredArticles.add(article);
+      }
+    }
+
     return articles;
   }
 
