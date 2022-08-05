@@ -15,8 +15,8 @@ public class BoardService {
   }
 
   public void makeTestData() {
-    make("notice", "공지사항");
-    make("free", "자유");
+    make("공지사항", "공지사항");
+    make("자유", "자유");
   }
 
   private int make(String code, String name) {

@@ -9,7 +9,6 @@ import com.psw.exam.board.service.BoardService;
 import com.psw.exam.board.service.MemberService;
 import com.psw.exam.board.util.Util;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UsrArticleController {
@@ -101,6 +100,9 @@ public class UsrArticleController {
 
   public void actionList(Rq rq) {
     int boardId = rq.getIntParam("boardId", 0);
+    String searchKeyword = rq.getParam("searchKeyword", "");
+    String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "");
+    String orderBy = rq.getParam("orderBy", "idDesc");
     Board board = null;
 
     if (boardId != 0) {
@@ -112,7 +114,7 @@ public class UsrArticleController {
       return;
     }
 
-    List<Article> articles = articleService.getArticles(boardId);
+    List<Article> articles = articleService.getArticles(boardId, orderBy, searchKeyword, searchKeywordTypeCode);
 
     String boardName = board == null ? "전체" : board.getName();
 
@@ -120,27 +122,7 @@ public class UsrArticleController {
     System.out.printf("------------------\n");
     System.out.printf("번호 / 게시판 / 작성자 / 현재날짜 / 제목 \n");
 
-
-    String searchKeyword = rq.getParam("searchKeyword", "");
-
-    // 검색 시작
-    List<Article> filteredArticles = articles;
-
-    if (searchKeyword.length() > 0 ) {
-      filteredArticles = new ArrayList<>();
-
-      for (Article article : articles) {
-        boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
-
-        if (matched) {
-          filteredArticles.add(article);
-        }
-      }
-    }
-
-    List<Article> sortedArticles = filteredArticles;
-
-    String orderBy = rq.getParam("orderBy", "idDesc");
+    List<Article> sortedArticles = articles;
 
     boolean orderByIdDesc = orderBy.equals("idDesc");
 
@@ -152,7 +134,7 @@ public class UsrArticleController {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), article.getBoardId(), writeName,  article.getRegDate(), article.getTitle());
+      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), articleBoardName, writeName,  article.getRegDate(), article.getTitle());
     }
     System.out.printf("------------------\n");
 
