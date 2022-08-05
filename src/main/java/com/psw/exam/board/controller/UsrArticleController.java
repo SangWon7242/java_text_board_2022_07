@@ -90,6 +90,8 @@ public class UsrArticleController {
       return;
     }
 
+    articleService.increaseHitCount(article.getId());
+
     System.out.println("- 게시물 상세 내용 -");
     System.out.printf("번호 : %d\n", article.getId());
     System.out.printf("작성날짜 : %s\n", article.getRegDate());

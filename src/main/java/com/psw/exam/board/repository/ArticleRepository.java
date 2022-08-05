@@ -112,4 +112,8 @@ public class ArticleRepository {
     article.setUpdateDate(Util.getNowDateStr());
 
   }
+
+  public void increaseHitCount(int id) {
+    getArticleById(id).setHitCount(getArticleById(id).getHitCount() + 1);
+  }
 }
