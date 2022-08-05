@@ -118,7 +118,7 @@ public class UsrArticleController {
 
     String boardName = board == null ? "전체" : board.getName();
 
-    System.out.printf("- %s 게시물 리스트 -\n", boardName);
+    System.out.printf("- %s 게시물 리스트(%d건) -\n", boardName, articles.size());
     System.out.printf("------------------\n");
     System.out.printf("번호 / 게시판 / 작성자 / 현재날짜 / 제목 \n");
 
