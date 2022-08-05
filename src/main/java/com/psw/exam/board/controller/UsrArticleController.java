@@ -94,6 +94,7 @@ public class UsrArticleController {
     System.out.printf("번호 : %d\n", article.getId());
     System.out.printf("작성날짜 : %s\n", article.getRegDate());
     System.out.printf("수정날짜 : %s\n", article.getUpdateDate());
+    System.out.printf("조회수 : %d\n", article.getHitCount());
     System.out.printf("제목 : %s\n", article.getTitle());
     System.out.printf("내용 : %s\n", article.getBody());
   }
@@ -122,13 +123,13 @@ public class UsrArticleController {
 
     System.out.printf("- %s 게시물 리스트(%d건) -\n", boardName, articles.size());
     System.out.printf("------------------\n");
-    System.out.printf("번호 / 게시판 / 작성자 / 현재날짜 / 제목 \n");
+    System.out.printf("번호 / 게시판 / 작성자 / 현재날짜 / 제목 / 조회수\n");
 
     for (Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 
-      System.out.printf("%d / %s / %s / %s / %s\n", article.getId(), articleBoardName, writeName,  article.getRegDate(), article.getTitle());
+      System.out.printf("%d / %s / %s / %s / %s / %d\n", article.getId(), articleBoardName, writeName,  article.getRegDate(), article.getTitle(), article.getHitCount());
     }
     System.out.printf("------------------\n");
 
