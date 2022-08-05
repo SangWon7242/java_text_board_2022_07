@@ -30,18 +30,6 @@ public class ArticleRepository {
     // 검색 시작
     List<Article> filteredArticles  = new ArrayList<>();
 
-    if (searchKeyword.length() > 0 ) {
-      filteredArticles = new ArrayList<>();
-
-      for (Article article : articles) {
-        boolean matched = article.getTitle().contains(searchKeyword) || article.getBody().contains(searchKeyword);
-
-        if (matched) {
-          filteredArticles.add(article);
-        }
-      }
-    }
-
     for(Article article : articles) {
       if (article.getBoardId() == boardId){
         filteredArticles.add(article);
