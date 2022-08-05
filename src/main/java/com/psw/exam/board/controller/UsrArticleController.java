@@ -99,6 +99,8 @@ public class UsrArticleController {
   }
 
   public void actionList(Rq rq) {
+    int page = rq.getIntParam("page", 1);
+    int pageItemCount = 10;
     int boardId = rq.getIntParam("boardId", 0);
     String searchKeyword = rq.getParam("searchKeyword", "");
     String searchKeywordTypeCode = rq.getParam("searchKeywordTypeCode", "");
@@ -114,7 +116,7 @@ public class UsrArticleController {
       return;
     }
 
-    List<Article> articles = articleService.getArticles(boardId, orderBy, searchKeyword, searchKeywordTypeCode);
+    List<Article> articles = articleService.getArticles(boardId, orderBy, searchKeyword, searchKeywordTypeCode, page, pageItemCount);
 
     String boardName = board == null ? "전체" : board.getName();
 
@@ -122,15 +124,7 @@ public class UsrArticleController {
     System.out.printf("------------------\n");
     System.out.printf("번호 / 게시판 / 작성자 / 현재날짜 / 제목 \n");
 
-    List<Article> sortedArticles = articles;
-
-    boolean orderByIdDesc = orderBy.equals("idDesc");
-
-    if (orderByIdDesc) {
-      sortedArticles = Util.reverseList(sortedArticles);
-    }
-
-    for (Article article : sortedArticles) {
+    for (Article article : articles) {
       String articleBoardName = getBoardNameByBoardId(article.getBoardId());
       String writeName = getWriteNameByBoardId(article.getMemberId());
 

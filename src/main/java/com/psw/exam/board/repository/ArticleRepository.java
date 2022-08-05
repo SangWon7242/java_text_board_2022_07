@@ -26,10 +26,7 @@ public class ArticleRepository {
     return id;
   }
 
-  public List<Article> getArticles(int boardId, String orderBy, String searchKeyword, String searchKeywordTypeCode) {
-    if ( boardId == 0 && searchKeyword.length() == 0 ) {
-      return articles;
-    }
+  public List<Article> getArticles(int boardId, String orderBy, String searchKeyword, String searchKeywordTypeCode, int limitStart, int limitCount) {
     // 검색 시작
     List<Article> filteredArticles  = new ArrayList<>();
 
@@ -51,11 +48,31 @@ public class ArticleRepository {
       }
     }
 
-   for ( Article article : articles ) {
+    int dataIndex = 0;
+
+    List<Article> sortedArticles = articles;
+
+    boolean orderByIdDesc = orderBy.equals("idDesc");
+
+    if (orderByIdDesc) {
+      sortedArticles = Util.reverseList(sortedArticles);
+    }
+
+   for ( Article article : sortedArticles ) {
      if ( boardId != 0) {
        if(article.getBoardId() != boardId) {
          continue;
        }
+     }
+
+     if ( dataIndex >= limitStart) {
+       filteredArticles.add(article);
+     }
+
+     dataIndex++;
+
+     if(filteredArticles.size() == limitCount) {
+       break;
      }
 
      if( searchKeyword.length() > 0 ) {
@@ -76,7 +93,6 @@ public class ArticleRepository {
            break;
        }
      }
-
    }
 
     return filteredArticles;
