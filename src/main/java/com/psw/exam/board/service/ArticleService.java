@@ -2,6 +2,7 @@ package com.psw.exam.board.service;
 
 import com.psw.exam.board.dto.Article;
 import com.psw.exam.board.repository.ArticleRepository;
+import com.psw.exam.board.util.Util;
 
 import java.util.List;
 
@@ -14,7 +15,11 @@ public class ArticleService {
   }
 
   public int write(int boardId, int memberId, String title, String body) {
-    return articleRepository.write(boardId, memberId, title, body);
+    return articleRepository.write(boardId, memberId, title, body, 0);
+  }
+
+  public int writeForTestData(int boardId, int memberId, String title, String body, int hitCount) {
+    return articleRepository.write(boardId, memberId, title, body, hitCount);
   }
 
   public void makeTestData() {
@@ -22,7 +27,7 @@ public class ArticleService {
       String title = "제목" + (i + 1);
       String body = "내용" + (i + 1);
 
-      write(i % 2 + 1, i % 2 + 1, title, body);
+      writeForTestData(i % 2 + 1, i % 2 + 1, title, body, Util.getRandomInt(1, 100));
     }
   }
 
